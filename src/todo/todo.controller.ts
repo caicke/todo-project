@@ -7,12 +7,15 @@ import {
   Delete,
   NotFoundException,
   Put,
-  HttpCode
+  HttpCode,
+  UseGuards
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { JwtGuard } from 'src/auth/guards';
 
+@UseGuards(JwtGuard)
 @Controller('todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) { }
