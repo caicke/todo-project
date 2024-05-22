@@ -90,24 +90,45 @@ export class AuthService {
         userFullName: string,
         userId: string,
         email: string,
-    ): Promise<{ access_token: string }> {
+    ): Promise<{ access_token: string, refresh_token: string }> {
         const payload = {
             sub: userId,
             email,
             fullName: userFullName
         };
-        const secret = this.config.get('JWT_SECRET');
 
-        const token = await this.jwt.signAsync(
+        const accessTokenSecret = this.config.get('JWT_SECRET');
+        const refreshTokenSecret = this.config.get('JWT_REFRESH_SECRET');
+
+        const accessToken = await this.jwt.signAsync(
             payload,
             {
-                expiresIn: '15m',
-                secret: secret,
+                expiresIn: '1m',
+                secret: accessTokenSecret,
             },
         );
 
+        const refreshToken = await this.jwt.signAsync(payload, {
+            expiresIn: '7d',
+            secret: refreshTokenSecret,
+        });
+
         return {
-            access_token: token,
+            access_token: accessToken,
+            refresh_token: refreshToken
         };
     }
+
+    async refreshToken(refreshToken: string): Promise<{ access_token: string }> {
+        try {
+            const payload = this.jwt.verify(refreshToken, {
+                secret: this.config.get('JWT_REFRESH_SECRET'),
+            });
+
+            return this.signToken(payload.fullName, payload.sub, payload.email);
+        } catch (error) {
+            throw new ForbiddenException('Invalid refresh token');
+        }
+    }
+
 }
