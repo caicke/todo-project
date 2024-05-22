@@ -23,7 +23,7 @@ export class TodoController {
   @Post()
   @HttpCode(204)
   async create(@Body() createTodoDto: CreateTodoDto) {
-
+    console.log(createTodoDto.userId)
     return await this.todoService.create(createTodoDto);
   }
 

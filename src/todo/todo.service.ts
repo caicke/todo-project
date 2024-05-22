@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
-import { data } from '../data/todos'
-import { Todo } from './entities/todo.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 

@@ -11,5 +11,6 @@ export class CreateTodoDto {
     })
     description: string;
 
+    @IsNotEmpty()
     userId: string;
 }
