@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
-import { PrismaService } from 'src/prisma/prisma.service';
-
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class TodoService {
@@ -13,7 +12,7 @@ export class TodoService {
   }
 
   async create(createTodoDto: CreateTodoDto) {
-    await this.prisma.todo.create({
+    return await this.prisma.todo.create({
       data: {
         title: createTodoDto.title,
         description: createTodoDto.description,

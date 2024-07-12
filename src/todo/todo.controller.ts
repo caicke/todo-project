@@ -13,7 +13,7 @@ import {
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { JwtGuard } from 'src/auth/guards';
+import { JwtGuard } from '../auth/guards';
 
 @UseGuards(JwtGuard)
 @Controller('todos')

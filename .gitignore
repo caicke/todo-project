@@ -36,3 +36,5 @@ lerna-debug.log*
 
 .env
 .vscode/launch.json
+
+jest-stare
